@@ -122,7 +122,7 @@ Visualizer web app
 
 2. このラボのスクリプトを含む git リポジトリをクローンします。 gcloud の承認を求められた場合は、承認してください。
 ```bash
-git clone https://github.com/google-cloud-japan/gig-training-materials.git
+git clone https://github.com/tpoppok/cloud-run-handson.git
 ```
 
 3. リポジトリディレクトリに移動します。
@@ -328,7 +328,7 @@ Cloud Runでは、アクティブな各 [リビジョン](https://cloud.google.c
 1. Cloud Shell を開きます。以前のシェルがしばらく非アクティブだった場合は、再接続が必要になる場合があります。その場合は、再接続後、リポディレクトリに移動し、環境変数を再設定します。
 
 ```bash
-cd ~/cloudshell_open/gig-training-materials/gig08-01/ && source vars.sh
+cd ~/cloudshell_open/cloud-run-handson/ws1/ && source vars.sh
 ```
 
 2. Cloud Run サービスを一覧表示します。
@@ -429,7 +429,7 @@ hey -z 30s -c 30 $WRITER_URL
 
 1. Cloud Shell を開きます。以前のシェルがしばらく非アクティブだった場合は、再接続が必要になる場合があります。その場合は、再接続後、repo ディレクトリに移動し、環境変数を再設定します。
 ```bash
-cd ~/cloudshell_open/gig-training-materials/gig08-01/ && source vars.sh
+cd ~/cloudshell_open/cloud-run-handson/ws1/ && source vars.sh
 ```
 
 2. metrics-writer サービスの新しいリビジョンをデプロイし、コンカレンシーと最大インスタンス値を既知の値に戻します。
@@ -564,5 +564,5 @@ gcloud projects delete $PROJECT_ID
 ### **3. ハンズオン資材の削除**
 
 ```bash
-cd $HOME && rm -rf ./cloudshell_open/gig-training-materials
+cd $HOME && rm -rf ./cloudshell_open/cloud-run-handson
 ```
