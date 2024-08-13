@@ -102,12 +102,10 @@ Visualizer web app
 このラボでは、次のタスクを実行します。
 
 - コンテナ化されたサービスを Cloud Run にデプロイします。
-- スケーリング動作を示すために Cloud Run に対して負荷を生成します。
-- ネットワークトラフィックを操作するためのロードバランサーとトラフィック分割ルールを構成します。
+- スケーリングの動作を確認するために Cloud Run に対して負荷を生成します。
+- ネットワークトラフィックを操作するためのトラフィック分割ルールを構成します。
 
-## 1. Containers はユニバーサル
-> _**クラウドネイティブの原則**: コンテナは、クラウドネイティブソフトウェアにおける、標準化されたイミュータブルなユニットです。_
-
+## 1. ローカル実行と Cloud Run へのデプロイ
 このタスクでは、環境を設定し、最初のアーキテクチャをデプロイします。
 
 - ビルド済みのコンテナイメージを使用して Cloud Run サービスを展開します。
@@ -292,14 +290,14 @@ gcloud run services list
 SERVICE: metrics-writer
 REGION: asia-northeast1
 URL: https://metrics-writer-rmclwajz3a-an.a.run.app
-LAST DEPLOYED BY: admin@hiroyukimomoi.altostrat.com
+LAST DEPLOYED BY: admin@tomook.altostrat.com
 LAST DEPLOYED AT: 2022-06-09T02:12:43.845980Z
 
 ✔
 SERVICE: visualizer
 REGION: asia-northeast1
 URL: https://visualizer-rmclwajz3a-an.a.run.app
-LAST DEPLOYED BY: admin@hiroyukimomoi.altostrat.com
+LAST DEPLOYED BY: admin@tomook.altostrat.com
 LAST DEPLOYED AT: 2022-06-09T04:38:29.682058Z
 ```
 
