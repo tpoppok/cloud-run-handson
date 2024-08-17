@@ -8,6 +8,7 @@
 - アーキテクチャの概要
 - Google Cloud プロジェクトの選択
 - 環境の準備
+  - シェル環境変数の設定
   - API の有効化
   - IAM の準備
 - GitHub と Cloud Build の連携
@@ -30,15 +31,28 @@
 Cloud Build や Cloud Deploy を使うことで、Google Cloud のサーバーレス実行環境である Cloud Run での開発にあたり、上に述べたような環境の自動的な払い出しやカナリア的なアプローチによる新機能のロールアウトを実現することが出来ます。
 
 このハンズオンでは、この流れを実際の開発業務に見立てて体験します。
+ここでは、以下の Google Cloud コンポーネントを使用します。
+- [Cloud Build](https://cloud.google.com/build/pricing?hl=ja)
+- [Cloud Deploy](https://cloud.google.com/deploy/pricing?hl=ja)
+- [Artifact Registry](https://cloud.google.com/artifact-registry/pricing?hl=ja)
+- [Cloud Run](https://cloud.google.com/run/pricing?hl=ja)
+- [Secret Manager](https://cloud.google.com/source-repositories/pricing?hl=ja)
+- [Cloud Storage](https://cloud.google.com/storage/pricing?hl=ja)
+* [料金計算ツール](https://cloud.google.com/products/calculator?hl=ja)を使うと、予想使用量に基づいて費用の見積もりを生成できます。
 
-## Google Cloud Project の作成、環境変数定義
+## Google Cloud プロジェクトの選択
 このチュートリアルでは、様々な[サービス アカウント](https://cloud.google.com/iam/docs/service-account-overview?hl=ja)を作成するため、チュートリアル実施者がオーナー権限（または編集者権限 + IAM 管理者権限）を持つプロジェクトが必要となります。
 
+**なるべく新しいプロジェクトを作成してください。**
 
+<walkthrough-project-setup>
+</walkthrough-project-setup>
 
-```
-export PROJECT_ID={Google Cloud Project ID}
-export PROJECT_NUMBER={Google Cloud Project Number}
+## 環境の準備
+### シェル環境変数の設定
+```bash
+export PROJECT_ID=<walkthrough-project-id />
+export PROJECT_NUMBER=<walkthrough-project-number />
 export GITHUB_ACCOUNT={自身の GitHub アカウント}
 ```
 
