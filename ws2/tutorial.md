@@ -52,9 +52,9 @@ Cloud Build や Cloud Deploy を使うことで、Google Cloud のサーバー�
 ### シェル環境変数の設定
 プロジェクトで繰り返し使用する値をシェルの環境変数に設定します。 **PROJECT_ID** と **PROJECT_NUMBER** には選択したプロジェクトのものが自動的に入力されています。 **GITHUB_ACCOUNT** は自身の GitHub アカウント名に置き換えてください、
 ```bash
-export PROJECT_ID=<walkthrough-project-id />
-export PROJECT_NUMBER=<walkthrough-project-number />
-export GITHUB_ACCOUNT={自身の GitHub アカウント}
+export PROJECT_ID=$(gcloud config get-value project)
+export PROJECT_NUMBER=$(gcloud projects list --filter="$(gcloud config get-value project)" --format="value(PROJECT_NUMBER))
+export GITHUB_ACCOUNT=[YOUR_GITHUB_ACCOUNT]
 ```
 
 ## API の有効化
