@@ -58,10 +58,10 @@ export GITHUB_ACCOUNT={自身の GitHub アカウント}
 ```
 
 ## API の有効化
+ハンズオンで必要になるサービスの API を有効化します。
+<walkthrough-enable-apis apis="artifactregistry.googleapis.com,run.googleapis.com,cloudbuild.googleapis.com,clouddeploy.googleapis.com,compute.googleapis.com,iam.googleapis.com,iamcredentials.googleapis.com,cloudresourcemanager.googleapis.com,sts.googleapis.com,secretmanager.googleapis.com"></walkthrough-enable-apis>
 
-<walkthrough-enable-apis apis="artifactregistry.googleapis.com,run.googleapis.com,cloudbuild.googleapis.com clouddeploy.googleapis.com,compute.googleapis.com iam.googleapis.com,iamcredentials.googleapis.com,cloudresourcemanager.googleapis.com,sts.googleapis.com,secretmanager.googleapis.com"></walkthrough-enable-apis>
-
-
+### (Option) コマンドラインで有効化する場合
 ```bash
 gcloud services enable artifactregistry.googleapis.com run.googleapis.com cloudbuild.googleapis.com clouddeploy.googleapis.com compute.googleapis.com iam.googleapis.com iamcredentials.googleapis.com cloudresourcemanager.googleapis.com sts.googleapis.com secretmanager.googleapis.com
 ```
