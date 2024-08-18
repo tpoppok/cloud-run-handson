@@ -62,11 +62,13 @@ export GITHUB_ACCOUNT={自身の GitHub アカウント}
 <walkthrough-enable-apis apis="artifactregistry.googleapis.com,run.googleapis.com,cloudbuild.googleapis.com,clouddeploy.googleapis.com,compute.googleapis.com,iam.googleapis.com,iamcredentials.googleapis.com,cloudresourcemanager.googleapis.com,sts.googleapis.com,secretmanager.googleapis.com"></walkthrough-enable-apis>
 
 ### (Option) コマンドラインで有効化する場合
+コマンドラインを使う場合、以下のコマンドを実行します。
 ```bash
 gcloud services enable artifactregistry.googleapis.com run.googleapis.com cloudbuild.googleapis.com clouddeploy.googleapis.com compute.googleapis.com iam.googleapis.com iamcredentials.googleapis.com cloudresourcemanager.googleapis.com sts.googleapis.com secretmanager.googleapis.com
 ```
 
 ## IAM の準備
+本ハンズオンで使用するサービス アカウントを作成します。
 1. Cloud Build 用のサービスアカウントの作成
 ```bash
 gcloud iam service-accounts create cloud-build-runner 
@@ -77,9 +79,10 @@ gcloud iam service-accounts create demo-backend-api
 ```
 
 ### Role の付与
-1. Cloud Deploy で利用するデフォルト SA
+前の手順で作成したサービス アカウントに、必要となる権限を割り当てます。
+1. Cloud Deploy で利用するデフォルト サービス アカウントに **Cloud Deploy ランナー** ・ **Cloud Deploy リリース担当者** ・ **Cloud Run デベロッパー** ・ **サービス アカウント ユーザー** の権限を割り当てます。これらの作業はコンソールからも実行可能です。
 ```bash
-gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/clouddeploy.jobRunner
+gcloud projects add-iam-policy-binding <walkthrough-project-id /> --member serviceAccount:<walkthrough-project-number />-compute@developer.gserviceaccount.com --role=roles/clouddeploy.jobRunner
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/clouddeploy.releaser
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/run.developer
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/iam.serviceAccountUser
