@@ -50,6 +50,7 @@ Cloud Build や Cloud Deploy を使うことで、Google Cloud のサーバー�
 
 ## 環境の準備
 ### シェル環境変数の設定
+プロジェクトで繰り返し使用する値をシェルの環境変数に設定します。 **PROJECT_ID** と **PROJECT_NUMBER** には選択したプロジェクトのものが自動的に入力されています。 **GITHUB_ACCOUNT** は自身の GitHub アカウント名に置き換えてください、
 ```bash
 export PROJECT_ID=<walkthrough-project-id />
 export PROJECT_NUMBER=<walkthrough-project-number />
@@ -57,6 +58,10 @@ export GITHUB_ACCOUNT={自身の GitHub アカウント}
 ```
 
 ## API の有効化
+
+<walkthrough-enable-apis apis=artifactregistry.googleapis.com,run.googleapis.com,cloudbuild.googleapis.com clouddeploy.googleapis.com,compute.googleapis.com iam.googleapis.com,iamcredentials.googleapis.com,cloudresourcemanager.googleapis.com,sts.googleapis.com,secretmanager.googleapis.com></walkthrough-enable-apis>
+
+
 ```bash
 gcloud services enable artifactregistry.googleapis.com run.googleapis.com cloudbuild.googleapis.com clouddeploy.googleapis.com compute.googleapis.com iam.googleapis.com iamcredentials.googleapis.com cloudresourcemanager.googleapis.com sts.googleapis.com secretmanager.googleapis.com
 ```
