@@ -48,6 +48,11 @@ Cloud Build や Cloud Deploy を使うことで、Google Cloud のサーバー�
 <walkthrough-project-setup>
 </walkthrough-project-setup>
 
+### 選択されたプロジェクト名を確認する
+```bash
+gcloud config get project
+```
+
 ## 環境の準備
 ### シェル環境変数の設定
 プロジェクトで繰り返し使用する値をシェルの環境変数に設定します。 **PROJECT_ID** と **PROJECT_NUMBER** には選択したプロジェクトのものが自動的に入力されています。 **GITHUB_ACCOUNT** は自身の GitHub アカウント名に置き換えてください、
