@@ -52,6 +52,11 @@ Cloud Build や Cloud Deploy を使うことで、Google Cloud のサーバー�
 ```bash
 gcloud config get project
 ```
+正しく設定されていれば、以下のように表示されます。
+```
+Your active configuration is: [cloudshell-17515]
+spider124-111
+```
 
 ## 環境の準備
 ### シェル環境変数の設定
