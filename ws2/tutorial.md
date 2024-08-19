@@ -40,6 +40,13 @@ Cloud Build や Cloud Deploy を使うことで、Google Cloud のサーバー�
 - [Cloud Storage](https://cloud.google.com/storage/pricing?hl=ja)
 * [料金計算ツール](https://cloud.google.com/products/calculator?hl=ja)を使うと、予想使用量に基づいて費用の見積もりを生成できます。
 
+### ハンズオンの流れ
+このハンズオンでは、GitHub リポジトリに対するアクションに連動して、次の3つの [Cloud Build トリガー](https://cloud.google.com/build/docs/triggers?hl=ja)が自動的に実行されます。
+1. 新機能開発のために Main ブランチから開発用ブランチを派生させて開発し、Main ブランチにプルリクエストを作成したことに連動して、Cloud Run のタグ付き開発環境を起動するトリガー
+2. プルリクエストを Main ブランチに取り込む(マージ)ことに連動して、Cloud Deploy でカナリアリリースのパイプラインを作成するトリガー
+3. マージ後に開発用ブランチを削除したことに連動(GitHub Actions)して、開発環境を削除するトリガー
+
+
 ## Google Cloud プロジェクトの選択
 このチュートリアルでは、様々な[サービス アカウント](https://cloud.google.com/iam/docs/service-account-overview?hl=ja)を作成するため、チュートリアル実施者がオーナー権限（または編集者権限 + IAM 管理者権限）を持つプロジェクトが必要となります。
 
@@ -60,7 +67,8 @@ spider124-111
 
 ## 環境の準備
 ### シェル環境変数の設定
-プロジェクトで繰り返し使用する値をシェルの環境変数に設定します。 **PROJECT_ID** と **PROJECT_NUMBER** には選択したプロジェクトのものが自動的に入力されています。 **GITHUB_ACCOUNT** は自身の GitHub アカウント名に置き換えてください、
+プロジェクトで繰り返し使用する値をシェルの環境変数に設定します。 **GITHUB_ACCOUNT** は自身の GitHub アカウント名に置き換えてください。
+**長時間の離席などにより Cloud Shell のセッションが切断された場合、必ずこの手順を再度実行して環境変数を設定し直して下さい。**
 ```bash
 export PROJECT_ID=$(gcloud config get-value project)
 export PROJECT_NUMBER=$(gcloud projects list --filter="$(gcloud config get-value project)" --format="value(PROJECT_NUMBER)")
@@ -89,15 +97,15 @@ gcloud iam service-accounts create demo-backend-api
 ```
 
 ### Role の付与
-前の手順で作成したサービス アカウントに、必要となる権限を割り当てます。
-1. Cloud Deploy で利用するデフォルト サービス アカウントに **Cloud Deploy ランナー** ・ **Cloud Deploy リリース担当者** ・ **Cloud Run デベロッパー** ・ **サービス アカウント ユーザー** の権限を割り当てます。これらの作業はコンソールからも実行可能です。
+前の手順で作成したサービス アカウントに、必要となる権限を割り当てます。これらの作業はコンソールからも実行可能です。
+1. Cloud Deploy で利用するデフォルト サービス アカウントに **Cloud Deploy ランナー** ・ **Cloud Deploy リリース担当者** ・ **Cloud Run デベロッパー** ・ **サービス アカウント ユーザー** の権限を割り当てます。
 ```bash
 gcloud projects add-iam-policy-binding <walkthrough-project-id/> --member serviceAccount:<walkthrough-project-number/>-compute@developer.gserviceaccount.com --role=roles/clouddeploy.jobRunner
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/clouddeploy.releaser
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/run.developer
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/iam.serviceAccountUser
 ```
-2. Cloud Build で利用する SA
+2. Cloud Build で利用するサービス アカウントに **Cloud Build サービス アカウント** ・ **Cloud Deploy オペレーター** ・  **Cloud Run 管理者** ・ **サービス アカウント ユーザー** の権限を割り当てます。
 ```bash
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:cloud-build-runner@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/cloudbuild.builds.builder
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:cloud-build-runner@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/clouddeploy.operator
@@ -105,7 +113,13 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:cloud
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:cloud-build-runner@${PROJECT_ID}.iam.gserviceaccount.com --role=roles/iam.serviceAccountUser
 ```
 
+3. Cloud Build の[サービス エージェント](https://cloud.google.com/iam/docs/service-account-types?hl=ja#service-agents)に **Secret Manager 管理者** の権限を割り当てます。この権限は GitHub Actions が Cloud Build のトリガーを起動する際に使用します。
+```bash
+gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:service-$PROJECT_NUMBER@gcp-sa-cloudbuild.iam.gserviceaccount.com --role=roles/secretmanager.admin
+```
+
 ## GitHub の準備
+
 1. このリポジトリを自分のアカウント以下に Fork
 https://github.com/tyorikan/cloud-run-tag-dev-example
 2. [clouddeploy.yaml](deploy/clouddeploy.yaml) 内のプロジェクト ID を修正してコミットしておく
