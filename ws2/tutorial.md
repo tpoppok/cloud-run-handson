@@ -125,12 +125,13 @@ sed -i -e "s#projects/cloud-run-deploy-demo#projects/${PROJECT_ID}#g" deploy/clo
 
 
 ## GitHub の準備
-GitHub 側で
-
-1. [clouddeploy.yaml](deploy/clouddeploy.yaml) 内のプロジェクト ID を修正してコミットしておく
+1. GitHub 側で新しく空のリポジトリを作成し、リモートリポジトリとして設定
+2. [clouddeploy.yaml](deploy/clouddeploy.yaml) 内のプロジェクト ID を修正してコミットしておく
 ```bash
 sed -i -e "s#projects/cloud-run-deploy-demo#projects/${PROJECT_ID}#g" deploy/clouddeploy.yaml
 ```
+3. ws2 以下のコンテンツ一式をリモートリポジトリの Main ブランチに Push
+
 3. Secrets の設定 
 Settings -> Secrets and variables -> Actions 画面で、Variables タブの選択
 
@@ -138,8 +139,8 @@ Settings -> Secrets and variables -> Actions 画面で、Variables タブの選�
 -------|-------- 
 | CLOUD_BUILD_REGION | asia-northeast1 |
 | CLOUD_BUILD_TRIGGER_NAME | demo-backend-api-remove-cloud-run-tag |
-| GCP_PROJECT_NUMBER | {Google Cloud Project Number} |
-| GCP_SA_ID | cloud-build-runner@{GOOGLE Cloud Project ID}.iam.gserviceaccount.com |
+| GCP_PROJECT_NUMBER | <walkthrough-project-number/> |
+| GCP_SA_ID | cloud-build-runner@<walkthrough-project-id>.iam.gserviceaccount.com |
 | WORKLOAD_IDENTITY_POOL | github-actions-pool |
 | WORKLOAD_IDENTITY_PROVIDER | github-actions-provider |
 
