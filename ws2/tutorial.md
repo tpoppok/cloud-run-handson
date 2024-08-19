@@ -117,12 +117,17 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:cloud
 ```bash
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:service-$PROJECT_NUMBER@gcp-sa-cloudbuild.iam.gserviceaccount.com --role=roles/secretmanager.admin
 ```
+## Cloud Deploy 構成ファイルの修正
+[clouddeploy.yaml](deploy/clouddeploy.yaml) 内のプロジェクト ID を修正し
+```bash
+sed -i -e "s#projects/cloud-run-deploy-demo#projects/${PROJECT_ID}#g" deploy/clouddeploy.yaml
+```
+
 
 ## GitHub の準備
+GitHub 側で
 
-1. このリポジトリを自分のアカウント以下に Fork
-https://github.com/tyorikan/cloud-run-tag-dev-example
-2. [clouddeploy.yaml](deploy/clouddeploy.yaml) 内のプロジェクト ID を修正してコミットしておく
+1. [clouddeploy.yaml](deploy/clouddeploy.yaml) 内のプロジェクト ID を修正してコミットしておく
 ```bash
 sed -i -e "s#projects/cloud-run-deploy-demo#projects/${PROJECT_ID}#g" deploy/clouddeploy.yaml
 ```
@@ -137,6 +142,8 @@ Settings -> Secrets and variables -> Actions 画面で、Variables タブの選�
 | GCP_SA_ID | cloud-build-runner@{GOOGLE Cloud Project ID}.iam.gserviceaccount.com |
 | WORKLOAD_IDENTITY_POOL | github-actions-pool |
 | WORKLOAD_IDENTITY_PROVIDER | github-actions-provider |
+
+
 
 ## Workload Idenitty 連携の準備
 1. IAM -> Workload Identity 連携へ移動し、プロバイダを追加
