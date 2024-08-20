@@ -136,14 +136,14 @@ sed -i -e "s#projects/cloud-run-deploy-demo#projects/${PROJECT_ID}#g" deploy/clo
 **Repository Variable** に下表の値を追加します。下表の"GCP_PROJECT_NUMBER" 及び "GCP_SA_ID" にはプロジェクト番号やプロジェクト名が自動的に入力されています。もし空欄になっている場合は手作業で追記して下さい。
 
 
-| Name | Value |
--------|-------- 
-| CLOUD_BUILD_REGION | asia-northeast1 |
-| CLOUD_BUILD_TRIGGER_NAME | demo-backend-api-remove-cloud-run-tag |
-| GCP_PROJECT_NUMBER | <walkthrough-project-number/> |
-| GCP_SA_ID | cloud-build-runner@<walkthrough-project-id>.iam.gserviceaccount.com|
-| WORKLOAD_IDENTITY_POOL | github-actions-pool |
-| WORKLOAD_IDENTITY_PROVIDER | github-actions-provider |
+| Name | Value | Note |
+-------|--------|------ 
+| CLOUD_BUILD_REGION | asia-northeast1 ||
+| CLOUD_BUILD_TRIGGER_NAME | demo-backend-api-remove-cloud-run-tag ||
+| GCP_PROJECT_NUMBER | <walkthrough-project-number/> |数字|
+| GCP_SA_ID | cloud-build-runner@<walkthrough-project-id>.iam.gserviceaccount.com|"@"の後にプロジェクト ID が含まれているか|
+| WORKLOAD_IDENTITY_POOL | github-actions-pool ||
+| WORKLOAD_IDENTITY_PROVIDER | github-actions-provider ||
 
 
 
