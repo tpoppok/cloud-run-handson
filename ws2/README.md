@@ -1,4 +1,4 @@
-# Cloud Run Tag Dev Example
+# Deploy your application to Cloud Run using Google Cloud's CI/CD pipeline
 Cloud Run で Pull Request 毎の環境を払い出すデモ
 1. 開発中の main ブランチに対して Pull Request が作成されると開発用の Cloud Run 環境を作成する。開発環境はタグ付きリビジョン固有 URL が払い出され、サービスエンドポイントに対するリクエストトラフィックはルーティングされないため、リビジョン固有 URL を知る人にしかアクセスが出来ない。
 2. Pull Request が Merge されると、ステージング用の環境が作成され、本番用の環境にカナリアリリースが可能となる。
