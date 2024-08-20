@@ -145,7 +145,7 @@ sed -i -e "s#projects/cloud-run-deploy-demo#projects/${PROJECT_ID}#g" deploy/clo
 | WORKLOAD_IDENTITY_POOL | github-actions-pool ||
 | WORKLOAD_IDENTITY_PROVIDER | github-actions-provider ||
 
-- 入力例
+* 入力例
 
 ![](https://raw.githubusercontent.com/tpoppok/cloud-run-handson/main/ws2/images/gh-variables.png)
 
@@ -163,15 +163,16 @@ ID プール名|github-actions-pool
 オーディエンス|デフォルト
 属性のマッピング ((Google*)=(OIDC*))|google.subject=assertion.sub, attribute.repository_owner=assertion.repository_owner
 
+* 属性マッピングの設定例
+
+![](https://raw.githubusercontent.com/tpoppok/cloud-run-handson/main/ws2/images/gh-attirbutemapping.png)
+
 2. GitHub Actions から Cloud Build を呼び出すため、Cloud Build で利用するサービス アカウントに対し、Workload Identity ユーザーの権限を追加します。
 ```bash
 gcloud iam service-accounts add-iam-policy-binding cloud-build-runner@${PROJECT_ID}.iam.gserviceaccount.com \
     --role=roles/iam.workloadIdentityUser \
     --member="principalSet://iam.googleapis.com/projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository_owner/${GITHUB_ACCOUNT}"
 ```
-* 属性マッピングの設定例
-
-![](https://raw.githubusercontent.com/tpoppok/cloud-run-handson/main/ws2/images/gh-attributemapping.png)
 
 ## Artifact Registry リポジトリの作成
 ```bash
