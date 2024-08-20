@@ -174,7 +174,9 @@ gcloud iam service-accounts add-iam-policy-binding cloud-build-runner@${PROJECT_
     --member="principalSet://iam.googleapis.com/projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/github-actions-pool/attribute.repository_owner/${GITHUB_ACCOUNT}"
 ```
 
+
 ## Artifact Registry リポジトリの作成
+ビルドしたコンテナをホストする [Artifact Registry](https://cloud.google.com/artifact-registry?hl=ja) のリポジトリを作成します。
 ```bash
 gcloud artifacts repositories create cloud-run-source-deploy \
     --repository-format=docker \
@@ -182,8 +184,37 @@ gcloud artifacts repositories create cloud-run-source-deploy \
 ```
 
 ## Cloud Build の準備
-1. Cloud Build -> リポジトリ -> ホスト接続を作成、で GitHub と接続
-2. Cloud Build -> リポジトリ -> リポジトリをリンク、から Fork したリポジトリをリンク
+GitHub 側での各操作に連動し、Cloud Build が予め定義したトリガーに従ってコンテナイメージのビルドや Cloud Deploy のパイプライン作成などを行います。
+
+### リポジトリの接続 (Cloud Console からの作業)
+#### ホスト接続の作成
+1. `Cloud Build` -> `リポジトリ` を選択し、右ペインで `第 2 世代` をクリックします。
+2. `ホスト接続を作成` をクリックします。
+3. 左側のプロバイダ一覧の中から `GitHub` を選択します。
+4. `リージョン` には **asia-northeast1**、名前は任意のものを入力し、接続を作成します。ポップアップが表示された場合は "continue" をクリックします。
+5. `既存の GitHub インストールの使用` が表示されるので、 "インストール" から個人の GitHub アカウントを選択し、 `確認` をクリックします。
+
+#### リポジトリの接続
+1. 第 2 世代のリポジトリ一覧から、先の手順で作成した接続を見つけます。
+2. 一番右のボタンをクリックし、 `リポジトリをリンク` をクリックします。
+3. 以前の手順で作成したプライベートリポジトリにチェックを付け、"OK" をクリックします。
+4. `リンク` をクリックします。 `リポジトリ名` はそのままで構いません。
+
+![](https://raw.githubusercontent.com/tpoppok/cloud-run-handson/main/ws2/images/linkrepo.png)
+
+#### 環境変数の設定
+1. 作成したホスト接続とリポジトリのリソース名を確認します。
+```bash
+gcloud builds connections list --region=asia-northeast1
+```
+応答は以下のようになります。 `NAME` に続く値がホスト名です。
+```
+NAME: myGitHub
+INSTALLATION_STATE: COMPLETE
+DISABLED: Enabled
+```
+
+
 3. 環境変数にセット
 ```bash
 export GITHUB_HOST=...
