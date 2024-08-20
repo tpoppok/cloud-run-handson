@@ -203,25 +203,19 @@ GitHub 側での各操作に連動し、Cloud Build が予め定義したトリ�
 ![](https://raw.githubusercontent.com/tpoppok/cloud-run-handson/main/ws2/images/linkrepo.png)
 
 #### 環境変数の設定
-1. 作成したホスト接続とリポジトリのリソース名を確認します。
+1. 作成したホスト接続のリソース名を取得し、環境変数に代入します。
 ```bash
-gcloud builds connections list --region=asia-northeast1
-```
-応答は以下のようになります。 `NAME` に続く値がホスト名です。
-```
-NAME: myGitHub
-INSTALLATION_STATE: COMPLETE
-DISABLED: Enabled
+export GITHUB_HOST=$(gcloud builds connections list --region=asia-northeast1|awk 'NR==2 {print $1}')
 ```
 
-
-3. 環境変数にセット
+2. 作成したリポジトリのリソース名を取得し、環境変数に代入します。
 ```bash
-export GITHUB_HOST=...
-export GITHUB_REPO=...
+export GITHUB_REPO=$(gcloud builds repositories list --region=asia-northeast1 --connection=myGitHub|awk 'NR==2 {print $1}')
 ```
 
-### トリガーの作成
+### Cloud Build トリガーの作成
+GitHub リポジトリの各種状態遷移によって起動する Cloud Build トリガーを作成します。
+
 1. demo-backend-api-pull-request
 ```bash
 cat <<EOF > ./pr-trigger.yaml
@@ -276,8 +270,9 @@ gcloud builds triggers import --source=./rm-tag-trigger.yaml --region asia-north
 ```
 
 ## Cloud Run サービスの準備
-(TODO: Cloud Run サービスが存在しない場合は作成するよう CI Pipeline を修正)  
-サンプルコンテナを利用して仮サービスを作成（コストはかからない）
+今回のハンズオンでは、既に Cloud Run 上のサービスは開発・運用中であり、そのサービスの追加開発を行うケースを想定しています。そのため、この手順で既存の Cloud Run サービスを立ち上げます。
+
+サンプルコンテナを利用して以下2つのサービスを作成します。
 1. demo-backend-api-dev	
 2. demo-backend-api-prod
 ```bash
