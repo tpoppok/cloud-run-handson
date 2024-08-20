@@ -145,7 +145,8 @@ sed -i -e "s#projects/cloud-run-deploy-demo#projects/${PROJECT_ID}#g" deploy/clo
 | WORKLOAD_IDENTITY_POOL | github-actions-pool ||
 | WORKLOAD_IDENTITY_PROVIDER | github-actions-provider ||
 
-
+- 入力例
+![](https://raw.githubusercontent.com/tpoppok/cloud-run-handson/main/ws2/images/gh-variables.png)
 
 ## Workload Idenitty 連携の準備
 1. IAM -> Workload Identity 連携へ移動し、プロバイダを追加
