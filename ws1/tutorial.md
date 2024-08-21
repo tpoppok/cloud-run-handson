@@ -59,7 +59,7 @@ gcloud config configurations list
 ### **1. チュートリアル資材があるディレクトリに移動する**
 
 ```bash
-cd ~/cloudshell_open/gig-training-materials/gig08-01/
+cd ~/cloudshell_open/gig-training-materials/ws1/
 ```
 
 ### **2. チュートリアルを開く**
@@ -125,7 +125,7 @@ git clone https://github.com/tpoppok/cloud-run-handson.git
 
 3. リポジトリディレクトリに移動します。
 ```bash
-cd ~/gig-training-materials/gig08-01
+cd ~/gig-training-materials/ws1/
 ```
 
 4. 必要な API を有効にします。
