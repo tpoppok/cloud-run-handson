@@ -215,7 +215,8 @@ export GITHUB_REPO=$(gcloud builds repositories list --region=asia-northeast1 --
 GitHub リポジトリの各種状態遷移によって起動する Cloud Build トリガーを作成します。
 
 1. demo-backend-api-pull-request
-```bash
+**環境によって不適切な Tab が挿入されることがあるため、ここは GitHub 側で Tutorialを参照してそちらから Copy して下さい**
+```
 cat <<EOF > ./pr-trigger.yaml
 description: Build and deploy to Cloud Run service demo-backend-api on pull request
 filename: cloudbuild_pr.yaml
@@ -229,11 +230,12 @@ repositoryEventConfig:
   repositoryType: GITHUB
 serviceAccount: projects/${PROJECT_ID}/serviceAccounts/cloud-build-runner@${PROJECT_ID}.iam.gserviceaccount.com
 EOF
-
+```
+```bash
 gcloud builds triggers import --source=./pr-trigger.yaml --region asia-northeast1
 ```
 2. demo-backend-api-push-main
-```bash
+```
 cat <<EOF > ./main-trigger.yaml
 description: Build and deploy to Cloud Run service demo-backend-api on push to main
 filename: cloudbuild.yaml
@@ -246,7 +248,8 @@ repositoryEventConfig:
   repositoryType: GITHUB
 serviceAccount: projects/${PROJECT_ID}/serviceAccounts/cloud-build-runner@${PROJECT_ID}.iam.gserviceaccount.com
 EOF
-
+```
+```bash
 gcloud builds triggers import --source=./main-trigger.yaml --region asia-northeast1
 ```
 3. demo-backend-api-remove-cloud-run-tag	
