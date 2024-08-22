@@ -122,7 +122,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:cloud
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:service-$PROJECT_NUMBER@gcp-sa-cloudbuild.iam.gserviceaccount.com --role=roles/secretmanager.admin
 ```
 ## Cloud Deploy 構成ファイルの修正
-[clouddeploy.yaml](deploy/clouddeploy.yaml) 内のプロジェクト ID を修正し
+[clouddeploy.yaml](deploy/clouddeploy.yaml) 内のプロジェクト ID を修正します。
 ```bash
 sed -i -e "s#projects/cloud-run-deploy-demo#projects/${PROJECT_ID}#g" deploy/clouddeploy.yaml
 ```
