@@ -104,7 +104,7 @@ gcloud iam service-accounts create demo-backend-api
 前の手順で作成したサービス アカウントに、必要となる権限を割り当てます。これらの作業はコンソールからも実行可能です。
 1. Cloud Deploy で利用するデフォルト サービス アカウントに **Cloud Deploy ランナー** ・ **Cloud Deploy リリース担当者** ・ **Cloud Run デベロッパー** ・ **サービス アカウント ユーザー** の権限を割り当てます。
 ```bash
-gcloud projects add-iam-policy-binding <walkthrough-project-id/> --member serviceAccount:$PROJECT_NUMBER-compute@developer.gserviceaccount.com --role=roles/clouddeploy.jobRunner
+gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:$PROJECT_NUMBER-compute@developer.gserviceaccount.com --role=roles/clouddeploy.jobRunner
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/clouddeploy.releaser
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/run.developer
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com --role=roles/iam.serviceAccountUser
