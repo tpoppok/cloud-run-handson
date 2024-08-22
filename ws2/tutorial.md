@@ -64,6 +64,10 @@ gcloud config get project
 Your active configuration is: [cloudshell-17515]
 spider124-111
 ```
+もし正しく設定されていない (unset 表示されている) 場合、以下のコマンドを実行して下さい。 **[YOUR_PROJECT_ID]** はご自身のプロジェクト ID に置き換えてください。
+```bash
+gcloud config set project [YOUR_PROJECT_ID]
+```
 
 ## 環境の準備
 ### シェル環境変数の設定
