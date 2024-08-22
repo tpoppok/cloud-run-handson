@@ -121,12 +121,6 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:cloud
 ```bash
 gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:service-$PROJECT_NUMBER@gcp-sa-cloudbuild.iam.gserviceaccount.com --role=roles/secretmanager.admin
 ```
-## Cloud Deploy 構成ファイルの修正
-[clouddeploy.yaml](deploy/clouddeploy.yaml) 内のプロジェクト ID を修正します。
-```bash
-sed -i -e "s#projects/cloud-run-deploy-demo#projects/${PROJECT_ID}#g" deploy/clouddeploy.yaml
-```
-
 
 ## GitHub の準備
 1. GitHub 側で新しく空のリポジトリを作成し、リモートリポジトリとして設定します。
