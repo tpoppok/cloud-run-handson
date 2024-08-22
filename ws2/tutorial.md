@@ -203,12 +203,12 @@ GitHub 側での各操作に連動し、Cloud Build が予め定義したトリ�
 #### 環境変数の設定
 1. 作成したホスト接続のリソース名を取得し、環境変数に代入します。
 ```bash
-export GITHUB_HOST=$(gcloud builds connections list --region=asia-northeast1|awk 'NR==2 {print $1}')
+export GITHUB_HOST=$(gcloud builds connections list --region=asia-northeast1|awk 'NR==1 {print $1}')
 ```
 
 2. 作成したリポジトリのリソース名を取得し、環境変数に代入します。
 ```bash
-export GITHUB_REPO=$(gcloud builds repositories list --region=asia-northeast1 --connection=myGitHub|awk 'NR==2 {print $1}')
+export GITHUB_REPO=$(gcloud builds repositories list --region=asia-northeast1 --connection=$GITHUB_HOST|awk 'NR==2 {print $1}')
 ```
 
 ### Cloud Build トリガーの作成
