@@ -208,7 +208,7 @@ export GITHUB_HOST=$(gcloud builds connections list --region=asia-northeast1|awk
 
 2. 作成したリポジトリのリソース名を取得し、環境変数に代入します。
 ```bash
-export GITHUB_REPO=$(gcloud builds repositories list --region=asia-northeast1 --connection=$GITHUB_HOST|awk 'NR==2 {print $1}')
+export GITHUB_REPO=$(gcloud builds repositories list --region=asia-northeast1 --connection=$GITHUB_HOST|awk 'NR==1 {print $2}')
 ```
 
 ### Cloud Build トリガーの作成
